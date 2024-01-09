@@ -5,8 +5,8 @@ const axios = require("axios");
 const app = express();
 const port = 5000;
 
-app.use(express.json({ limit: "15mb" })); // Permite que el servidor recibe request de tipo Json.
-app.use(express.urlencoded({ extended: true, limit: "15mb" })); // Permite recibir request de tipo "multimedia"
+app.use(express.json({ limit: "15mb" }));
+app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 
 app.use(
   cors({
@@ -21,8 +21,6 @@ app.use(
 );
 
 app.get("/places", async (req, res) => {
-  // const apiUrl = req.query.apiUrl;
-
   const apiKey = "AIzaSyDlqhte9y0XRMqlkwF_YJ6Ynx8HQrNyF3k";
 
   const apiUrl = `${req.query.apiUrl}&key=${apiKey}`;
