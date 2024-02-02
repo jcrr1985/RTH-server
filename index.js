@@ -13,9 +13,7 @@ app.use(
     origin: function (origin, callback) {
       callback(null, true);
     },
-
     credentials: true,
-
     methods: "POST,GET,PUT,OPTIONS,DELETE",
   })
 );
