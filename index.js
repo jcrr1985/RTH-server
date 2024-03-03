@@ -1,9 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
+const mongoose = require("mongoose");
 
 const app = express();
 const port = 5000;
+
+const url =
+  "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/feedbackdb";
+app.use(express.json());
 
 app.use(express.json({ limit: "15mb" }));
 app.use(express.urlencoded({ extended: true, limit: "15mb" }));
@@ -17,6 +22,50 @@ app.use(
     methods: "POST,GET,PUT,OPTIONS,DELETE",
   })
 );
+
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on("error", (error) => console.error("MongoDB connection error:", error));
+db.once("open", () => console.log("Connected to MongoDB"));
+
+// Feedback Schema and Model
+
+// Feedback Schema and Model
+const feedbackSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  country: { type: String, required: true },
+  comment: { type: String, required: true },
+});
+
+const Feedback = mongoose.model("feedback", feedbackSchema);
+
+// API Endpoint to handle form submission
+app.post("/feedback", async (req, res) => {
+  console.log("in post feedback");
+  const { name, email, country, comment } = req.body;
+
+  const newFeedback = new Feedback({
+    name,
+    email,
+    country,
+    comment,
+  });
+
+  console.log("newFeedback", newFeedback);
+
+  try {
+    const feedback = await newFeedback.save();
+    console.log("feedback", feedback);
+    res.status(201).json({ mesage: "succesfully saved", feedback });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 app.get("/places", async (req, res) => {
   const apiKey = "AIzaSyDlqhte9y0XRMqlkwF_YJ6Ynx8HQrNyF3k";
