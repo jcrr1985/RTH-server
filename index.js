@@ -4,7 +4,7 @@ const axios = require("axios");
 const mongoose = require("mongoose");
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 const url =
   "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/feedbackdb";
@@ -13,15 +13,7 @@ app.use(express.json());
 app.use(express.json({ limit: "15mb" }));
 app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      callback(null, true);
-    },
-    credentials: true,
-    methods: "POST,GET,PUT,OPTIONS,DELETE",
-  })
-);
+app.use(cors());
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -32,9 +24,6 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error("MongoDB connection error:", error));
 db.once("open", () => console.log("Connected to MongoDB"));
 
-// Feedback Schema and Model
-
-// Feedback Schema and Model
 const feedbackSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
@@ -44,32 +33,8 @@ const feedbackSchema = new mongoose.Schema({
 
 const Feedback = mongoose.model("feedback", feedbackSchema);
 
-// API Endpoint to handle form submission
-app.post("/feedback", async (req, res) => {
-  console.log("in post feedback");
-  const { name, email, country, comment } = req.body;
-
-  const newFeedback = new Feedback({
-    name,
-    email,
-    country,
-    comment,
-  });
-
-  console.log("newFeedback", newFeedback);
-
-  try {
-    const feedback = await newFeedback.save();
-    console.log("feedback", feedback);
-    res.status(201).json({ mesage: "succesfully saved", feedback });
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
 app.get("/places", async (req, res) => {
   const apiKey = "AIzaSyDlqhte9y0XRMqlkwF_YJ6Ynx8HQrNyF3k";
-
   const apiUrl = `${req.query.apiUrl}&key=${apiKey}`;
 
   try {
@@ -83,5 +48,5 @@ app.get("/places", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("server started on port 5000");
+  console.log(`Server started on port ${port}`);
 });
