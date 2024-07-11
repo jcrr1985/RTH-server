@@ -1,12 +1,15 @@
+require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
 const axios = require("axios");
 const mongoose = require("mongoose");
 
-const sdk = require("node-appwrite");
-
 const app = express();
 const port = process.env.PORT || 5000;
+
+const multer = require("multer");
+
+const { Storage } = require("@google-cloud/storage");
+const storage = new Storage();
 
 const url =
   "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/fullapp";
@@ -42,38 +45,6 @@ const feedbackSchema = new mongoose.Schema({
 
 const Feedback = mongoose.model("feedback", feedbackSchema);
 
-// CARS
-
-const appwriteConfig = {
-  endpoint: "https://cloud.appwrite.io/v1",
-  platform: "com.julio.aora",
-  projectId: "664d1f5500235511f8b7",
-  databaseId: "664d2112001a9fab9699",
-  userCollectionId: "664d23ae001f7c3125bb",
-  videoCollectionId: "664d23ca002b95e7ccd2",
-  storageId: "664d2709002b146f1594",
-};
-
-const {
-  endpoint,
-  platform,
-  projectId,
-  databaseId,
-  userCollectionId,
-  videoCollectionId,
-  storageId,
-} = appwriteConfig;
-
-const client = new sdk.Client();
-
-let database = new sdk.Databases(client, databaseId);
-let storage = new sdk.Storage(client);
-
-client
-  .setEndpoint(endpoint)
-  .setProject(projectId)
-  .setKey(process.env.APPWRITE_API_KEY);
-
 app.get("/places", async (req, res) => {
   const apiKey = "AIzaSyDlqhte9y0XRMqlkwF_YJ6Ynx8HQrNyF3k";
   const apiUrl = `${req.query.apiUrl}&key=${apiKey}`;
@@ -105,21 +76,74 @@ const carSchema = new mongoose.Schema({
 
 const Car = mongoose.model("Car", carSchema);
 
+const bucketName = "namekusein";
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+
 // Ruta para subir archivos
-app.post("/upload", async (req, res) => {
+app.post("/cars", upload.single("file"), async (req, res) => {
+  console.log("url", req.body.url);
   try {
+    const {
+      make,
+      model,
+      package,
+      color,
+      year,
+      category,
+      mileage,
+      price,
+      forSell,
+    } = req.body;
     const file = req.file;
 
-    const uploadedFile = await storage.createFile(
-      file.buffer,
-      file.mimetype,
-      ["*"],
-      file.originalname
-    );
+    // Verificar si el archivo existe
+    if (!file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
-    res.json({ fileId: uploadedFile.$id });
+    // Subir el archivo a Google Cloud Storage
+    const blob = storage.bucket(bucketName).file(file.originalname);
+    const blobStream = blob.createWriteStream({
+      resumable: false,
+    });
+
+    blobStream.on("error", (err) => {
+      console.error("Error al subir archivo a GCP:", err);
+      res.status(500).json({ error: "Error interno del servidor" });
+    });
+
+    blobStream.on("finish", async () => {
+      const publicUrl = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
+
+      // Crear un nuevo auto con la URL del archivo
+      const newCar = new Car({
+        make,
+        model,
+        package,
+        color,
+        year,
+        category,
+        mileage,
+        price,
+        filename: file.originalname,
+        forSell,
+      });
+
+      try {
+        const savedCar = await newCar.save();
+        res.status(201).json(savedCar);
+      } catch (error) {
+        console.error("Error al guardar el coche en la base de datos:", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+      }
+    });
+
+    blobStream.end(file.buffer);
   } catch (error) {
-    console.error("Error al subir archivo:", error);
+    console.error("Error al procesar la solicitud:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
