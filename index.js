@@ -9,8 +9,9 @@ const port = process.env.PORT || 5000;
 const multer = require("multer");
 
 const { Storage } = require("@google-cloud/storage");
-const storage = new Storage();
-
+const storage = new Storage({
+  credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS),
+});
 const url =
   "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/fullapp";
 app.use(express.json());
