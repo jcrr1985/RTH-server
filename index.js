@@ -3,19 +3,26 @@ const cors = require("cors");
 const axios = require("axios");
 const mongoose = require("mongoose");
 
-const { Client, Storage, Database } = require("node-appwrite");
+const sdk = require("node-appwrite");
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 const url =
-  "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/feedbackdb";
+  "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/fullapp";
 app.use(express.json());
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 app.use(express.json({ limit: "15mb" }));
 app.use(express.urlencoded({ extended: true, limit: "15mb" }));
-
-app.use(cors());
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -57,12 +64,15 @@ const {
   storageId,
 } = appwriteConfig;
 
-const client = new Client();
-client.setEndpoint(endpoint).setProject(projectId);
+const client = new sdk.Client();
 
-// Configuración del servicio de almacenamiento
-const storage = new Storage(client);
-const database = new Database(client);
+let database = new sdk.Databases(client, databaseId);
+let storage = new sdk.Storage(client);
+
+client
+  .setEndpoint(endpoint)
+  .setProject(projectId)
+  .setKey(process.env.APPWRITE_API_KEY);
 
 app.get("/places", async (req, res) => {
   const apiKey = "AIzaSyDlqhte9y0XRMqlkwF_YJ6Ynx8HQrNyF3k";
@@ -118,6 +128,7 @@ app.post("/upload", async (req, res) => {
 app.get("/cars", async (req, res) => {
   try {
     const cars = await Car.find();
+    console.log("Cars from DB:", cars);
     res.json(cars);
   } catch (err) {
     console.log("err::", err);
