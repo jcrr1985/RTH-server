@@ -9,8 +9,10 @@ const port = process.env.PORT || 5000;
 const multer = require("multer");
 
 const { Storage } = require("@google-cloud/storage");
-const storage = new Storage();
-
+const storage = new Storage({
+  projectId: "ageless-aleph-372710",
+  keyFilename: path.join(__dirname, "./ageless-aleph-372710-f48f68f14d8f.json"),
+});
 const url =
   "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/fullapp";
 app.use(express.json());
