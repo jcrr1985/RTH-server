@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const mongoose = require("mongoose");
@@ -25,6 +26,15 @@ app.use(function (req, res, next) {
 
 app.use(express.json({ limit: "15mb" }));
 app.use(express.urlencoded({ extended: true, limit: "15mb" }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 mongoose.connect(url, {
   useNewUrlParser: true,
