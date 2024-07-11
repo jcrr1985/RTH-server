@@ -78,6 +78,23 @@ app.get("/places", async (req, res) => {
   }
 });
 
+// CARS
+
+const carSchema = new mongoose.Schema({
+  make: String,
+  model: String,
+  package: String,
+  color: String,
+  year: String,
+  category: String,
+  mileage: String,
+  price: String,
+  filename: String,
+  forSell: String,
+});
+
+const Car = mongoose.model("Car", carSchema);
+
 // Ruta para subir archivos
 app.post("/upload", async (req, res) => {
   try {
