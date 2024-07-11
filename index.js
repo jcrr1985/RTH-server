@@ -37,7 +37,7 @@ const Feedback = mongoose.model("feedback", feedbackSchema);
 
 // CARS
 
-export const appwriteConfig = {
+const appwriteConfig = {
   endpoint: "https://cloud.appwrite.io/v1",
   platform: "com.julio.aora",
   projectId: "664d1f5500235511f8b7",
