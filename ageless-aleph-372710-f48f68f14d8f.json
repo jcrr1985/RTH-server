@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ageless-aleph-372710",
+  "private_key_id": "2d0748295b89c32a36b18f0505dd21f3f68f97e2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCnYMQBnlXc+bSp\n2V0ysXx987HV4d6a+LvN+0uu1WIhjNnOaW8ds+09s8LIBHSBIH3/JmMQ7LiV64zK\nuteBbnbEDY3NuUz/Jgw7YMVqG5or5wtH+duGcaeC8V5bjscLJ3SnxkZAgemaps2I\nHLaSLcA3sUbHIeKLQI8Jk9g6AxbewdA0FPRq+iao9AWki+fRDZAgbZZXw3wz39SL\nasD+bAmk+lwgPIzyj1qxm8KMkSBOd92g0BeyzwiRsMtOGgPXaOsgA8kKaZrRgkjs\niNbo+VAMFwepC1TIFmsKsSkeUdlYjkWRCPs5UMdHllfsOHJ7e6HfX6yWofh7triz\n5i2ClC0RAgMBAAECggEAJa5RMhQVPHQyyfIXWyw93JUaOg5pcPYCQbMLLMb5Gph9\nCE0QKN2y0StA9IqcN926v9BCiTLhs06eGZ3Kmmbl8ekjPWc0AFTueAenKeYg5TVU\ngtWrKC86CO6R0YbpJIezaXnnouocTyayKqxcJbiLB36vcnEccUENcpiIGzdK1Mbr\nzbdceSPU3m9ecNf9rfRbYvf6il6+Tf7pxOJagCsJg5Lr+H+Infm74e6BXDp+hXUl\naDQu2lRutmRmYUoKIPDKGrAoo9R+QqwYLvyg9bFpOGpMiDMTp6zN7dqvJMzZKZbc\nv1NgdJU4AAg4scAVVuVjy4SGTkldBVQQVSQO7E+e6QKBgQDdyHINTYM2QOeRybEG\nS1GaBA7oYkxfuurIY2sXWSFfNA5+NYgVt3tMv1FUQ+lu2LKVMEAzPJyZrSKGi7yb\n+QVWHyplzjVbhlvNepNkpNSvdx1/aTP/EBl6EVqYkyz8wAEaXiCDLjVQcsD5l5Qt\n00UWFpyJbvLk9B/NrsAu4NMNcwKBgQDBM4l2bXLPMQqHWp835dMejQZnrioGfjX6\n195b5zMbu+fiTKTUjd9PKH0/WnW+TQBDG1cIDroIQ2m2qHg0xQpPKAYPtOErAdFg\nf04crzGXE5PfTybXNxhc9OK15G78nmGKu0B6Z2MCsf0FUb90vNkvN4/H35zVtmtE\nq5v7XQi6awKBgC3S7aXL/zFlhbM8riPzyf99mSrwrIEXGM2gpQ7k7p1CH0B6hQyf\npY089mvnwEKT6YojtxAfFOg3uqt8EdNUR4L824C/c4zenPc+vVeNKxi6DtE1hnXL\n+Mec8FAYELKEZXXyPtt7364ol7C6XfZ98YdX0q4ey3b87dlMow7Miy77AoGATzZI\nJ+wb5GMhA/ndyddKxf3gIGZCCMN6ckxLeLbEN5zFJ/1wn01Dv3rET1NRbyK29syg\n1Eblczngf+l2z3vyDB5Gze3FXBK0u7G2XwBdfqmiOS6EqDyImqQ0x4rPDngJWg4I\nE6eL6rD7IlEwBDbhfQB0zOgbr2vJczBBFcBBMd0CgYAdPfLxoZ14VB1NIxVzbCmW\nUTBr6zrrgnVbzfzlaUNlMtnJ/9X4XI+ooRe7R3hKxhA/bAz74xX7c+taWg7E2ESQ\nGPcJF8x9ia7s0fsWkQhJ3RIuMmebeNOjeX+C+zznE86KlLP6qf9yAbER3kuCJ2mY\nJVMgUbrXQRSnLLYotWcpLA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "namekuseincs@ageless-aleph-372710.iam.gserviceaccount.com",
+  "client_id": "102185596176726569736",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/namekuseincs%40ageless-aleph-372710.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

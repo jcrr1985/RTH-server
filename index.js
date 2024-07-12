@@ -2,16 +2,18 @@ require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const fs = require("fs");
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-const multer = require("multer");
-
 const { Storage } = require("@google-cloud/storage");
+
 const storage = new Storage({
-  credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS),
+  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 });
+
 const url =
   "mongodb+srv://jcrr1985:Tumama4$@cluster0.zi7qsgn.mongodb.net/fullapp";
 app.use(express.json());
@@ -27,15 +29,6 @@ app.use(function (req, res, next) {
 
 app.use(express.json({ limit: "15mb" }));
 app.use(express.urlencoded({ extended: true, limit: "15mb" }));
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -94,6 +87,8 @@ const upload = multer({
 
 // Ruta para subir archivos
 app.post("/cars", upload.single("file"), async (req, res) => {
+  console.log("Request received:", req.body);
+  console.log("File received:", req.file);
   try {
     const {
       make,
