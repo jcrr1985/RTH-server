@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
-const mongoose = require("mongoose");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -38,6 +37,7 @@ app.get("/places", async (req, res) => {
 });
 
 app.get("/clinics", async (req, res) => {
+  const nameOfClinicValue = req.query.nameOfClinicValue;
   const apiKey = "AIzaSyDlqhte9y0XRMqlkwF_YJ6Ynx8HQrNyF3k";
   const apiUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${nameOfClinicValue}&inputtype=textquery&fields=name,formatted_address,rating,opening_hours,geometry,place_id&key=${apiKey}`;
 
