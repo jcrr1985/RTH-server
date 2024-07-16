@@ -62,7 +62,7 @@ app.get("/places", async (req, res) => {
   }
 });
 
-app.get("clinics", async (req, res) => {
+app.get("/clinics", async (req, res) => {
   const apiKey = "AIzaSyDlqhte9y0XRMqlkwF_YJ6Ynx8HQrNyF3k";
   const apiUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${nameOfClinicValue}&inputtype=textquery&fields=name,formatted_address,rating,opening_hours,geometry,place_id&key=${apiKey}`;
 
