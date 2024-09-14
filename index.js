@@ -38,11 +38,12 @@ app.get("/clinics", async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 });
+
 const { OpenAI } = require("openai");
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  baseURL: "https://api.aimlapi.com",
+  baseURL: "api.openai.com/v1",
 });
 
 app.get("/chat", async (req, res) => {
@@ -58,7 +59,7 @@ app.get("/chat", async (req, res) => {
 
 async function main() {
   const completion = await openai.chat.completions.create({
-    model: "mistralai/Mistral-7B-Instruct-v0.2",
+    model: "gpt-4o-mini", // Cambiado a un modelo compatible
     messages: [
       {
         role: "system",
@@ -72,6 +73,7 @@ async function main() {
     temperature: 0.7,
     max_tokens: 128,
   });
+
   console.log("AI/ML API:\n", completion.choices[0].message.content);
 
   return completion.choices[0].message.content;
