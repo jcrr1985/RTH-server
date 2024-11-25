@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
-const cohere = require("cohere-ai"); // Import Cohere
+const cohere = require("cohere-ai");
 
 const app = express();
 const port = process.env.PORT || 5000;
