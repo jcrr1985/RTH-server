@@ -16,7 +16,9 @@ cohere.init(COHERE_API_KEY);
 
 app.use(
   cors({
-    origin: "*",
+    origin: "*", // Allows requests from any origin
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
   })
 );
 
