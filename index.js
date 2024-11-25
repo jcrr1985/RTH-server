@@ -16,7 +16,7 @@ cohere.init(COHERE_API_KEY);
 
 app.use(
   cors({
-    origin: "https://rth-jcrr1985s-projects.vercel.app", // Allow only your frontend domain
+    origin: "*",
   })
 );
 
