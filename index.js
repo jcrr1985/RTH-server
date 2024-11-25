@@ -14,6 +14,12 @@ app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 const COHERE_API_KEY = process.env.COHERE_API_KEY;
 cohere.init(COHERE_API_KEY);
 
+app.use(
+  cors({
+    origin: "https://rth-jcrr1985s-projects.vercel.app", // Allow only your frontend domain
+  })
+);
+
 app.get("/places", async (req, res) => {
   const apiKey = "AIzaSyDlqhte9y0XRMqlkwF_YJ6Ynx8HQrNyF3k";
   const apiUrl = `${req.query.apiUrl}&key=${apiKey}`;
