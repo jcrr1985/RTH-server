@@ -12,7 +12,6 @@ app.use(express.json({ limit: "15mb" }));
 app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 
 const COHERE_API_KEY = process.env.COHERE_API_KEY;
-cohere.init(COHERE_API_KEY);
 
 app.use(
   cors({
@@ -62,6 +61,7 @@ app.post("/api/getDiagnosis", async (req, res) => {
       prompt: prompt,
       max_tokens: 300,
       temperature: 0.5,
+      api_key: COHERE_API_KEY, // Pass the API key here
     });
 
     const diagnosis = response.body.generations[0].text.trim();
